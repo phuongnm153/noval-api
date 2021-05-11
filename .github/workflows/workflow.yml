@@ -21,26 +21,25 @@ jobs:
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      steps:
-      	- name: Checkout master
-	  uses: actions/checkout@main 
-  	- name: Install doctl
-      	  uses: digitalocean/action-doctl@v2
-          with:
-          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
-	- name: Build container image
-          run: docker build -t registry.digitalocean.com/docker-registry-phuongnm/noval-api:$(echo $GITHUB_SHA | head -c7) .
-        - name: Log in to DigitalOcean Container Registry with short-lived credentials
-          run: doctl registry login --expiry-seconds 1200
-        - name: Push image to DigitalOcean Container Registry
-          run: docker push registry.digitalocean.com/docker-registry-phuongnm/noval-api:$(echo $GITHUB_SHA | head -c7)
-	- name: Update deployment file
-          run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/docker-registry-phuongnm/noval-api:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
-        - name: Save DigitalOcean kubeconfig with short-lived credentials
-          run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 <cluster-name>
-        - name: Deploy to DigitalOcean Kubernetes
-          run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
-        - name: Verify deployment
-          run: kubectl rollout status deployment/deployment_noval_api
+      - name: Checkout master
+        uses: actions/checkout@main
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+            token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Build container image
+        run: docker build -t registry.digitalocean.com/docker-registry-phuongnm/noval-api:$(echo $GITHUB_SHA | head -c7) .
+          - name: Log in to DigitalOcean Container Registry with short-lived credentials
+            run: doctl registry login --expiry-seconds 1200
+          - name: Push image to DigitalOcean Container Registry
+            run: docker push registry.digitalocean.com/docker-registry-phuongnm/noval-api:$(echo $GITHUB_SHA | head -c7)
+      - name: Update deployment file
+        run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/docker-registry-phuongnm/noval-api:'${TAG}'|' $GITHUB_WORKSPACE/config/deployment.yml
+      - name: Save DigitalOcean kubeconfig with short-lived credentials
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 <cluster-name>
+      - name: Deploy to DigitalOcean Kubernetes
+        run: kubectl apply -f $GITHUB_WORKSPACE/config/deployment.yml
+      - name: Verify deployment
+        run: kubectl rollout status deployment/deployment_noval_api
