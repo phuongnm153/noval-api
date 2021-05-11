@@ -2,7 +2,7 @@
 
 const _ = require("lodash");
 const DbMixin = require("../../mixins/db.mixin");
-const Customer = require("../models/customer.model");
+const Customer = require("../models/payment.model");
 // const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 
 /*
@@ -24,8 +24,8 @@ function hashPassword(password) {
 }*/
 
 module.exports = {
-	name: "customers",
-	mixins: [DbMixin("customers")],
+	name: "payments",
+	mixins: [DbMixin("payments")],
 	model: Customer,
 
 	settings: {
