@@ -27,7 +27,7 @@
  */
 module.exports = {
 	// Namespace of nodes to segment your nodes on the same network.
-	namespace: "",
+	namespace: "NOVALAPI",
 	// Unique node identifier. Must be unique in a namespace.
 	nodeID: null,
 	// Custom metadata store. Store here what you want. Accessing: `this.broker.metadata`
@@ -62,7 +62,12 @@ module.exports = {
 
 	// Define a cacher.
 	// More info: https://moleculer.services/docs/0.14/caching.html
-	cacher: "Memory",
+	cacher: {
+		type: "memory",
+		options: {
+			ttl: 5 // 30 seconds
+		}
+	},
 
 	// Define a serializer.
 	// Available values: "JSON", "Avro", "ProtoBuf", "MsgPack", "Notepack", "Thrift".
