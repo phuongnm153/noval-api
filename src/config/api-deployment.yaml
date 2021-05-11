@@ -62,16 +62,18 @@ spec:
 
 ---
 
-apiVersion: networking.k8s.io/v1beta1
+apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress
+  name: api-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "name-of-static-ip"
+    kubernetes.io/ingress.class: "gce"
 spec:
   rules:
-    - host: noval-api.127.0.0.1.nip.io
-      http:
+    - http:
         paths:
-          - path: /
+          - path: /*
             backend:
-              serviceName: api
-              servicePort: 3000
+              serviceName: api-service
+              servicePort: 80
