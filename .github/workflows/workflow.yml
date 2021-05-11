@@ -38,7 +38,7 @@ jobs:
       - name: Update deployment file
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/docker-registry-phuongnm/noval-api:'${TAG}'|' $GITHUB_WORKSPACE/src/config/deployment.yml
       - name: Save DigitalOcean kubeconfig with short-lived credentials
-        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 do-sgp1-k8s-1-20-2-do-0-sgp1-1620653441112
+        run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-20-2-do-0-sgp1-1620653441112
       - name: Deploy to DigitalOcean Kubernetes
         run: kubectl apply -f $GITHUB_WORKSPACE/src/config/deployment.yml
       - name: Verify deployment
