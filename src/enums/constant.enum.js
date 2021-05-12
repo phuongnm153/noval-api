@@ -1,4 +1,8 @@
-export const PAYMENT_NEW = 0;
-export const PAYMENT_PENDING = 1;
-export const PAYMENT_SUCCESS = 2;
-export const PAYMENT_FAIL = 3;
+const BOOKING_NEW = 0;
+const BOOKING_PENDING = 1;
+const BOOKING_SUCCESS = 2;
+const BOOKING_FAIL = 3;
+
+module.exports = {
+	BOOKING_NEW
+};

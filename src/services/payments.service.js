@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
-const _ = require("lodash");
-const DbMixin = require("../../mixins/db.mixin");
-const Customer = require("../models/payment.model");
+const _ = require('lodash');
+const DbMixin = require('../../mixins/db.mixin');
+const Customer = require('../models/payment.model');
 // const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 
 /*
@@ -24,12 +24,12 @@ function hashPassword(password) {
 }*/
 
 module.exports = {
-	name: "payments",
-	mixins: [DbMixin("payments")],
+	name: 'payments',
+	mixins: [DbMixin('payments')],
 	model: Customer,
 
 	settings: {
-		fields: ["_id", "username", "fullName", "email", "avatar"]
+		fields: ['_id', 'username', 'fullName', 'email', 'avatar']
 	},
 
 	actions: {

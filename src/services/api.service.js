@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-const ApiGateway = require("moleculer-web");
+const ApiGateway = require('moleculer-web');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
@@ -9,7 +9,7 @@ const ApiGateway = require("moleculer-web");
  */
 
 module.exports = {
-	name: "api",
+	name: 'api',
 	mixins: [ApiGateway],
 
 	// More info about settings: https://moleculer.services/docs/0.14/moleculer-web.html
@@ -18,17 +18,17 @@ module.exports = {
 		port: process.env.PORT || 3000,
 
 		// Exposed IP
-		ip: "0.0.0.0",
+		ip: '0.0.0.0',
 
 		// Global Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 		use: [],
 
 		routes: [
 			{
-				path: "/api",
+				path: '/api',
 
 				whitelist: [
-					"**"
+					'**'
 				],
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
@@ -51,14 +51,14 @@ module.exports = {
 
 				},
 
-				/** 
+				/**
 				 * Before call hook. You can check the request.
-				 * @param {Context} ctx 
-				 * @param {Object} route 
-				 * @param {IncomingRequest} req 
-				 * @param {ServerResponse} res 
+				 * @param {Context} ctx
+				 * @param {Object} route
+				 * @param {IncomingRequest} req
+				 * @param {ServerResponse} res
 				 * @param {Object} data
-				 * 
+				 *
 				onBeforeCall(ctx, route, req, res) {
 					// Set request headers to context meta
 					ctx.meta.userAgent = req.headers["user-agent"];
@@ -66,10 +66,10 @@ module.exports = {
 
 				/**
 				 * After call hook. You can modify the data.
-				 * @param {Context} ctx 
-				 * @param {Object} route 
-				 * @param {IncomingRequest} req 
-				 * @param {ServerResponse} res 
+				 * @param {Context} ctx
+				 * @param {Object} route
+				 * @param {IncomingRequest} req
+				 * @param {ServerResponse} res
 				 * @param {Object} data
 				onAfterCall(ctx, route, req, res, data) {
 					// Async function which return with Promise
@@ -82,16 +82,16 @@ module.exports = {
 				bodyParsers: {
 					json: {
 						strict: false,
-						limit: "1MB"
+						limit: '1MB'
 					},
 					urlencoded: {
 						extended: true,
-						limit: "1MB"
+						limit: '1MB'
 					}
 				},
 
 				// Mapping policy setting. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Mapping-policy
-				mappingPolicy: "all", // Available values: "all", "restrict"
+				mappingPolicy: 'all', // Available values: "all", "restrict"
 
 				// Enable/disable logging
 				logging: true
@@ -108,7 +108,7 @@ module.exports = {
 
 		// Serve assets from "public" folder. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Serve-static-files
 		assets: {
-			folder: "public",
+			folder: 'public',
 
 			// Options to `server-static` module
 			options: {}
@@ -131,15 +131,15 @@ module.exports = {
 		 */
 		async authenticate(ctx, route, req) {
 			// Read the token from header
-			const auth = req.headers["authorization"];
+			const auth = req.headers['authorization'];
 
-			if (auth && auth.startsWith("Bearer")) {
+			if (auth && auth.startsWith('Bearer')) {
 				const token = auth.slice(7);
 
 				// Check the token. Tip: call a service which verify the token. E.g. `accounts.resolveToken`
-				if (token == "123456") {
+				if (token == '123456') {
 					// Returns the resolved user. It will be set to the `ctx.meta.user`
-					return { id: 1, name: "John Doe" };
+					return { id: 1, name: 'John Doe' };
 
 				} else {
 					// Invalid token
@@ -168,8 +168,8 @@ module.exports = {
 			const user = ctx.meta.user;
 
 			// It check the `auth` property in action schema.
-			if (req.$action.auth == "required" && !user) {
-				throw new ApiGateway.Errors.UnAuthorizedError("NO_RIGHTS");
+			if (req.$action.auth == 'required' && !user) {
+				throw new ApiGateway.Errors.UnAuthorizedError('NO_RIGHTS');
 			}
 		}
 

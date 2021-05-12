@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 
-let mongoose = require("mongoose");
+let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
 let CustomerSchema = new Schema({
@@ -9,17 +9,17 @@ let CustomerSchema = new Schema({
 		unique: true,
 		index: true,
 		lowercase: true,
-		required: "Please fill in a username",
+		required: 'Please fill in a username',
 		trim: true
 	},
 	password: {
 		type: String,
-		required: "Please fill in a password"
+		required: 'Please fill in a password'
 	},
 	fullName: {
 		type: String,
 		trim: true,
-		"default": ""
+		default: ''
 	},
 	email: {
 		type: String,
@@ -27,7 +27,24 @@ let CustomerSchema = new Schema({
 		unique: true,
 		index: true,
 		lowercase: true,
-		required: "Please fill in an email"
+		required: 'Please fill in an email',
+		validate: {
+			validator: function (v) {
+				const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+				return re.test(v);
+			},
+			message: props => `${props.value} is not a valid email!`
+		},
+	},
+	phone: {
+		type: String,
+		validate: {
+			validator: function (v) {
+				return /[0]\d{9}/.test(v);
+			},
+			message: props => `${props.value} is not a valid phone number!`
+		},
+		required: [true, 'User phone number required']
 	},
 	avatar: {
 		type: String
@@ -39,8 +56,8 @@ let CustomerSchema = new Schema({
 // Add full-text search index
 CustomerSchema.index({
 	//"$**": "text"
-	"fullName": "text",
-	"username": "text"
+	'fullName': 'text',
+	'username': 'text'
 });
 
-module.exports = mongoose.model("Customers", CustomerSchema);
+module.exports = mongoose.model('Customers', CustomerSchema);

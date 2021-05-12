@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-let mongoose = require("mongoose");
-const {PAYMENT_NEW} = require("../enums/constant.enum");
+let mongoose = require('mongoose');
+const {BOOKING_NEW} = require('../enums/constant.enum');
 let Schema = mongoose.Schema;
 
 let PaymentSchema = new Schema({
@@ -26,17 +26,9 @@ let PaymentSchema = new Schema({
 		index: true,
 		trim: true
 	},
-	email: {
-		type: String,
-		trim: true,
-		unique: true,
-		index: true,
-		lowercase: true,
-		required: "Please fill in an email"
-	},
 	status: {
 		type: Number,
-		default: PAYMENT_NEW,
+		default: BOOKING_NEW,
 		min: 0,
 		max: 3
 	}
@@ -47,8 +39,8 @@ let PaymentSchema = new Schema({
 // Add full-text search index
 PaymentSchema.index({
 	//"$**": "text"
-	"fullName": "text",
-	"username": "text"
+	'fullName': 'text',
+	'username': 'text'
 });
 
-module.exports = mongoose.model("Payments", PaymentSchema);
+module.exports = mongoose.model('Payments', PaymentSchema);
