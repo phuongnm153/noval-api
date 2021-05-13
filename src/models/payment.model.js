@@ -1,7 +1,7 @@
 'use strict';
 
 let mongoose = require('mongoose');
-const {BOOKING_NEW} = require('../enums/constant.enum');
+const {BOOKING_NEW, PAYMENT_POINT} = require('../enums/constant.enum');
 let Schema = mongoose.Schema;
 
 let PaymentSchema = new Schema({
@@ -11,7 +11,15 @@ let PaymentSchema = new Schema({
 		index: true,
 		trim: true
 	},
-	amount: {
+	paymentMethod: {
+		type: Number,
+		default: PAYMENT_POINT
+	},
+	totalMoney: {
+		type: Number,
+		min: 0
+	},
+	point: {
 		type: Number,
 		min: 0
 	},
@@ -21,9 +29,20 @@ let PaymentSchema = new Schema({
 		index: true,
 		trim: true
 	},
-	methodId: {
+	paymentAt: {
+		type: Date,
+		default: Date.now
+	},
+	requestData: {
 		type: String,
-		index: true,
+		trim: true
+	},
+	responseData: {
+		type: String,
+		trim: true
+	},
+	paymentUrl: {
+		type: String,
 		trim: true
 	},
 	status: {

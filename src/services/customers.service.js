@@ -29,7 +29,7 @@ module.exports = {
 	model: Customer,
 
 	settings: {
-		fields: ['_id', 'username', 'fullName', 'email', 'avatar']
+		fields: ['_id', 'username', 'fullName', 'password', 'email', 'phone', 'address']
 	},
 
 	actions: {

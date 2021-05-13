@@ -1,39 +1,76 @@
 'use strict';
 
+const { MoleculerError } = require('moleculer').Errors;
 const _ = require('lodash');
 const DbMixin = require('../../mixins/db.mixin');
-const Customer = require('../models/payment.model');
+const Payment = require('../models/payment.model');
+const {PAYMENT_POINT, PAYMENT_GATEWAY, PAYMENT_SUCCESS, PAYMENT_FAIL} = require('../enums/constant.enum');
 // const CacheCleaner = require("../mixins/cache.cleaner.mixin");
-
-/*
-const bcrypt = require("bcrypt");
-function hashPassword(password) {
-	return new Promise((resolve, reject) => {
-		bcrypt.genSalt(10, function (error, salt) {
-			if (error) {
-				return reject(error);
-			}
-			bcrypt.hash(password, salt, function (error, hashedPassword) {
-				if (error) {
-					return reject(error);
-				}
-				resolve(hashedPassword);
-			});
-		});
-	});
-}*/
 
 module.exports = {
 	name: 'payments',
 	mixins: [DbMixin('payments')],
-	model: Customer,
+	model: Payment,
 
 	settings: {
-		fields: ['_id', 'username', 'fullName', 'email', 'avatar']
+		fields: [
+			'_id', 'bookingId', 'paymentMethod', 'totalMoney', 'point', 'status',
+			'transactionId', 'paymentAt', 'requestData', 'responseData', 'paymentUrl'
+		]
 	},
 
 	actions: {
+		/**
+		 * paymentByNovaIDPoint
+		 */
+		paymentByNovaIDPoint: {
+			rest: 'POST /paymentByNovaIDPoint',
+			// params: {
+			// 	id: 'string',
+			// 	value: 'number|integer|positive'
+			// },
+			/** @param {Context} ctx  */
+			async handler(ctx) {
+				let random_boolean = Math.random() < 0.5;
+				let data = {
+					...ctx.params,
+					paymentMethod: PAYMENT_POINT,
+					paymentAt: new Date(),
+					status: random_boolean ? PAYMENT_SUCCESS : PAYMENT_FAIL,
+				};
+				const json = await this.adapter.insert(data);
+				if (!random_boolean)
+					return this.Promise.reject(new MoleculerError('Invalid point amount', 404, 'INVALID_POINT'));
 
+				return json;
+			}
+		},
+
+		/**
+		 * paymentByPaymentGateway
+		 */
+		paymentByPaymentGateway: {
+			rest: 'POST /paymentByPaymentGateway',
+			// params: {
+			// 	id: 'string',
+			// 	value: 'number|integer|positive'
+			// },
+			/** @param {Context} ctx  */
+			async handler(ctx) {
+				let random_boolean = Math.random() < 0.5;
+				let data = {
+					...ctx.params,
+					paymentMethod: PAYMENT_GATEWAY,
+					paymentAt: new Date(),
+					status: random_boolean ? PAYMENT_SUCCESS : PAYMENT_FAIL,
+				};
+				const json = await this.adapter.insert(data);
+				if (!random_boolean)
+					return this.Promise.reject(new MoleculerError('Payment fail', 404, 'PAYMENT_FAIL'));
+
+				return json;
+			},
+		}
 	},
 
 	methods: {
