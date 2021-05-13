@@ -1,13 +1,13 @@
-"use strict";
+'use strict';
 
-const fs = require("fs");
-const DbService	= require("moleculer-db");
+const fs = require('fs');
+const DbService	= require('moleculer-db');
 
 /**
  * @typedef {import('moleculer').Context} Context Moleculer's Context
  */
 
-module.exports = function(collection) {
+module.exports = function(collection, model) {
 	const cacheCleanEventName = `cache.clean.${collection}`;
 
 	const schema = {
@@ -48,27 +48,28 @@ module.exports = function(collection) {
 				if (count == 0) {
 					this.logger.info(`The '${collection}' collection is empty. Seeding the collection...`);
 					await this.seedDB();
-					this.logger.info("Seeding is done. Number of records:", await this.adapter.count());
+					this.logger.info('Seeding is done. Number of records:', await this.adapter.count());
 				}
 			}
 		}
 	};
-	const MONGO_URI = "mongodb://localhost/moleculer-blog";
+	const MONGO_URI = 'mongodb://localhost/moleculer-blog';
 	if (MONGO_URI) {
 		// Mongo adapter
-		const MongoAdapter = require("moleculer-db-adapter-mongo");
+		const MongoAdapter = require('moleculer-db-adapter-mongo');
 
 		schema.adapter = new MongoAdapter(MONGO_URI);
 		schema.collection = collection;
-	} else if (process.env.NODE_ENV === "test") {
+		schema.model = model;
+	} else if (process.env.NODE_ENV === 'test') {
 		// NeDB memory adapter for testing
 		schema.adapter = new DbService.MemoryAdapter();
 	} else {
 		// NeDB file DB adapter
 
 		// Create data folder
-		if (!fs.existsSync("./data")) {
-			fs.mkdirSync("./data");
+		if (!fs.existsSync('./data')) {
+			fs.mkdirSync('./data');
 		}
 
 		schema.adapter = new DbService.MemoryAdapter({ filename: `./data/${collection}.db` });

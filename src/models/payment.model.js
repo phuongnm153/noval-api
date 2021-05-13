@@ -2,14 +2,18 @@
 
 let mongoose = require('mongoose');
 const {BOOKING_NEW, PAYMENT_POINT} = require('../enums/constant.enum');
-let Schema = mongoose.Schema;
+let Schema = mongoose.Schema,
+	autoIncrement = require('mongoose-auto-increment');
+
+let connection = mongoose.createConnection('mongodb://localhost/moleculer-blog');
+
+autoIncrement.initialize(connection);
 
 let PaymentSchema = new Schema({
 	bookingId: {
-		type: String,
+		type: Number,
 		unique: true,
-		index: true,
-		trim: true
+		index: true
 	},
 	paymentMethod: {
 		type: Number,
@@ -31,7 +35,7 @@ let PaymentSchema = new Schema({
 	},
 	paymentAt: {
 		type: Date,
-		default: Date.now
+		default: new Date()
 	},
 	requestData: {
 		type: String,
@@ -61,5 +65,6 @@ PaymentSchema.index({
 	'fullName': 'text',
 	'username': 'text'
 });
+PaymentSchema.plugin(autoIncrement.plugin, {model: 'Payments', startAt: 1});
 
 module.exports = mongoose.model('Payments', PaymentSchema);

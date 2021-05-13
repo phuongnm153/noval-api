@@ -1,22 +1,33 @@
 'use strict';
 
 const { MoleculerError } = require('moleculer').Errors;
-const _ = require('lodash');
-const DbMixin = require('../../mixins/db.mixin');
+const DbService = require('moleculer-db');
+const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const Payment = require('../models/payment.model');
 const {PAYMENT_POINT, PAYMENT_GATEWAY, PAYMENT_SUCCESS, PAYMENT_FAIL} = require('../enums/constant.enum');
 // const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 
 module.exports = {
 	name: 'payments',
-	mixins: [DbMixin('payments')],
+	mixins: [DbService],
+	adapter: new MongooseAdapter('mongodb://localhost/moleculer-blog', { useNewUrlParser: true, useUnifiedTopology: true }),
 	model: Payment,
 
 	settings: {
 		fields: [
 			'_id', 'bookingId', 'paymentMethod', 'totalMoney', 'point', 'status',
 			'transactionId', 'paymentAt', 'requestData', 'responseData', 'paymentUrl'
-		]
+		],
+		// Populating
+		populates: {
+			// Populate the `author` field from `users` service
+			bookingInfo: {
+				action: 'bookings.get',
+				params: {
+					fields: ['bookingCode', 'totalMoney']
+				}
+			}
+		}
 	},
 
 	actions: {
@@ -35,7 +46,7 @@ module.exports = {
 				let data = {
 					...ctx.params,
 					paymentMethod: PAYMENT_POINT,
-					paymentAt: new Date(),
+					// paymentAt: new Date(),
 					status: random_boolean ? PAYMENT_SUCCESS : PAYMENT_FAIL,
 				};
 				const json = await this.adapter.insert(data);
@@ -61,7 +72,7 @@ module.exports = {
 				let data = {
 					...ctx.params,
 					paymentMethod: PAYMENT_GATEWAY,
-					paymentAt: new Date(),
+					// paymentAt: new Date(),
 					status: random_boolean ? PAYMENT_SUCCESS : PAYMENT_FAIL,
 				};
 				const json = await this.adapter.insert(data);

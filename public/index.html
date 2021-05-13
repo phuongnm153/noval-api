@@ -527,7 +527,7 @@
 
 					requests: {
 						customers: [
-							{ id: "list", action: "customers.list", rest: "/api/customers/", response: null, status: null, duration: null },
+							{ id: "list", action: "customers.list", rest: "/api/customers/?pageSize=100", response: null, status: null, duration: null },
 
 							{ id: "create", action: "customers.create", rest: "/api/customers/", method: "POST", fields: [
 									{ field: "username", label: "Username", type: "text", paramType: "body", model: "userName" },
@@ -543,7 +543,7 @@
 								], response: null, status: null, duration: null },
 
 							{ id: "update", action: "customers.update", rest: "/api/customers/:id", method: "PUT", fields: [
-									{ field: "id", label: "ID", type: "text", paramType: "url", model: "productID" },
+									{ field: "id", label: "ID", type: "text", paramType: "url", model: "userID" },
 									{ field: "username", label: "Username", type: "text", paramType: "body", model: "userName" },
 									{ field: "fullName", label: "FullName", type: "text", paramType: "body", model: "userFullName" },
 									{ field: "phone", label: "Phone", type: "text", paramType: "body", model: "userPhone" },
@@ -555,7 +555,7 @@
 								], response: null, status: null, duration: null },
 						],
 						bookings: [
-							{ id: "list", action: "bookings.list", rest: "/api/bookings/", response: null, status: null, duration: null },
+							{ id: "list", action: "bookings.list", rest: "/api/bookings/?pageSize=100", response: null, status: null, duration: null },
 							{ id: "create", action: "bookings.create", rest: "/api/bookings/", method: "POST", fields: [
 									{ field: "bookingCode", model: "bkbookingCode", label: "Booking Code", type: "text", paramType: "body"},
 									{ field: "hotelId", model: "bkhotelId",  label: "Hotel ID", type: "number", paramType: "body" },
@@ -581,6 +581,7 @@
 								], response: null, status: null, duration: null },
 
 							{ id: "update", action: "bookings.update", rest: "/api/bookings/:id", method: "PUT", fields: [
+									{ field: "id", model: "bkID", label: "Booking ID", type: "text", paramType: "url"},
 									{ field: "bookingCode", model: "bkbookingCode", label: "Booking Code", type: "text", paramType: "body"},
 									{ field: "promotionId", model: "bkpromotionId", label: "Promotion ID", type: "number", paramType: "body" },
 									{ field: "checkIn", model: "bkcheckIn", label: "Check In", type: "date", paramType: "body" },
@@ -604,7 +605,7 @@
 						],
 
 						payments: [
-							{ id: "list", action: "payments.list", rest: "/api/payments/", response: null, status: null, duration: null },
+							{ id: "list", action: "payments.list", rest: "/api/payments/?pageSize=100", response: null, status: null, duration: null },
 							{ id: "paymentByNovaIDPoint", action: "payments.paymentByNovaIDPoint", rest: "/api/payments/paymentByNovaIDPoint", method: "POST", fields: [
 									{ field: "bookingId", model: "pbookingID", label: "Booking ID", type: "text", paramType: "body"},
 									{ field: "totalMoney", model: "ptotalMoney",  label: "Total Money", type: "number", paramType: "body" },

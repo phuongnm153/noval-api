@@ -1,7 +1,12 @@
 'use strict';
 
 let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
+let Schema = mongoose.Schema,
+	autoIncrement = require('mongoose-auto-increment');
+
+let connection = mongoose.createConnection('mongodb://localhost/moleculer-blog');
+
+autoIncrement.initialize(connection);
 
 let CustomerSchema = new Schema({
 	username: {
@@ -59,5 +64,5 @@ CustomerSchema.index({
 	'fullName': 'text',
 	'username': 'text'
 });
-
+CustomerSchema.plugin(autoIncrement.plugin, {model: 'Customers', startAt: 1});
 module.exports = mongoose.model('Customers', CustomerSchema);

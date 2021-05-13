@@ -36,6 +36,7 @@
     "moleculer-fake": "^1.0.14",
     "moleculer-web": "^0.9.1",
     "mongoose": "^5.12.7",
+    "mongoose-auto-increment": "^5.0.1",
     "mongoose-delete": "^0.5.3",
     "nats": "^1.4.12"
   },

@@ -1,12 +1,13 @@
 'use strict';
 
-const _ = require('lodash');
-const DbMixin = require('../../mixins/db.mixin');
+const DbService = require('moleculer-db');
+const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const Booking = require('../models/booking.model');
 
 module.exports = {
 	name: 'bookings',
-	mixins: [DbMixin('bookings')],
+	mixins: [DbService],
+	adapter: new MongooseAdapter('mongodb://localhost/moleculer-blog', { useNewUrlParser: true, useUnifiedTopology: true }),
 	model: Booking,
 
 	settings: {

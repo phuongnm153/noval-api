@@ -1,7 +1,7 @@
 'use strict';
 
-const _ = require('lodash');
-const DbMixin = require('../../mixins/db.mixin');
+const DbService = require('moleculer-db');
+const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const Customer = require('../models/customer.model');
 // const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 
@@ -25,7 +25,8 @@ function hashPassword(password) {
 
 module.exports = {
 	name: 'customers',
-	mixins: [DbMixin('customers')],
+	mixins: [DbService],
+	adapter: new MongooseAdapter('mongodb://localhost/moleculer-blog', { useNewUrlParser: true, useUnifiedTopology: true }),
 	model: Customer,
 
 	settings: {

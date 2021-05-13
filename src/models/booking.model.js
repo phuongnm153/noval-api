@@ -3,7 +3,12 @@
 let mongoose = require('mongoose');
 const {BOOKING_NEW} = require('../enums/constant.enum');
 let Schema = mongoose.Schema;
-let mongoose_delete = require('mongoose-delete');
+let mongoose_delete = require('mongoose-delete'),
+	autoIncrement = require('mongoose-auto-increment');
+
+let connection = mongoose.createConnection('mongodb://localhost/moleculer-blog');
+
+autoIncrement.initialize(connection);
 
 let BookingSchema = new Schema({
 	hotelId: {
@@ -29,18 +34,16 @@ let BookingSchema = new Schema({
 	},
 	totalMoney: {
 		type: Number,
-		min: 0
+		min: 0,
+		required: 'Please fill total money',
 	},
 	paymentId: {
-		type: String,
-		unique: true,
-		index: true,
-		trim: true
+		type: Number,
+		index: true
 	},
 	customerId: {
-		type: String,
-		index: true,
-		trim: true
+		type: Number,
+		index: true
 	},
 	customerName: {
 		type: String,
@@ -90,4 +93,5 @@ BookingSchema.index({
 	'username': 'text'
 });
 BookingSchema.plugin(mongoose_delete);
+BookingSchema.plugin(autoIncrement.plugin, {model: 'Bookings', startAt: 1});
 module.exports = mongoose.model('Bookings', BookingSchema);
