@@ -10,7 +10,7 @@ const {PAYMENT_POINT, PAYMENT_GATEWAY, PAYMENT_SUCCESS, PAYMENT_FAIL} = require(
 module.exports = {
 	name: 'payments',
 	mixins: [DbService],
-	adapter: new MongooseAdapter('mongodb://localhost/moleculer-blog', { useNewUrlParser: true, useUnifiedTopology: true }),
+	adapter: new MongooseAdapter(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
 	model: Payment,
 
 	settings: {

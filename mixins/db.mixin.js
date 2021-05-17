@@ -53,7 +53,7 @@ module.exports = function(collection, model) {
 			}
 		}
 	};
-	const MONGO_URI = 'mongodb://localhost/moleculer-blog';
+	const MONGO_URI = process.env.MONGO_URI;
 	if (MONGO_URI) {
 		// Mongo adapter
 		const MongoAdapter = require('moleculer-db-adapter-mongo');

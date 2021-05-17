@@ -6,7 +6,7 @@ let Schema = mongoose.Schema;
 let mongoose_delete = require('mongoose-delete'),
 	autoIncrement = require('mongoose-auto-increment');
 
-let connection = mongoose.createConnection('mongodb://localhost/moleculer-blog');
+let connection = mongoose.createConnection(process.env.MONGO_URI);
 
 autoIncrement.initialize(connection);
 

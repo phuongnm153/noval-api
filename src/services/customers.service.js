@@ -26,7 +26,7 @@ function hashPassword(password) {
 module.exports = {
 	name: 'customers',
 	mixins: [DbService],
-	adapter: new MongooseAdapter('mongodb://localhost/moleculer-blog', { useNewUrlParser: true, useUnifiedTopology: true }),
+	adapter: new MongooseAdapter(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
 	model: Customer,
 
 	settings: {

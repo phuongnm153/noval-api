@@ -12,7 +12,7 @@ data:
   TRANSPORTER: nats://nats:4222
   CACHER: Memory
 
-  MONGO_URI: mongodb://localhost/moleculer-blog
+  MONGO_URI: <MONGO_URI>
 
 ---
 #########################################################

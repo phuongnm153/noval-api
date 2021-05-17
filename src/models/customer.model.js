@@ -4,7 +4,7 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema,
 	autoIncrement = require('mongoose-auto-increment');
 
-let connection = mongoose.createConnection('mongodb://localhost/moleculer-blog');
+let connection = mongoose.createConnection(process.env.MONGO_URI);
 
 autoIncrement.initialize(connection);
 

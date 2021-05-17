@@ -7,7 +7,7 @@ const Booking = require('../models/booking.model');
 module.exports = {
 	name: 'bookings',
 	mixins: [DbService],
-	adapter: new MongooseAdapter('mongodb://localhost/moleculer-blog', { useNewUrlParser: true, useUnifiedTopology: true }),
+	adapter: new MongooseAdapter(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
 	model: Booking,
 
 	settings: {
