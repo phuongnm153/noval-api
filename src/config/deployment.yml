@@ -129,10 +129,10 @@ spec:
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: common-env
+              name: common-env
           env:
             - name: SERVICES
-              value: customers
+              value: src/services/customers.service.js
 
 ---
 #########################################################
@@ -158,10 +158,10 @@ spec:
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: common-env
+              name: common-env
           env:
             - name: SERVICES
-              value: bookings
+              value: src/services/bookings.service.js
 
 ---
 #########################################################
@@ -187,10 +187,10 @@ spec:
           imagePullPolicy: Always
           envFrom:
             - configMapRef:
-                name: common-env
+              name: common-env
           env:
             - name: SERVICES
-              value: payments
+              value: src/services/bookings.service.js
 
 ---
 #########################################################
