@@ -205,8 +205,8 @@ spec:
     app: nats
   ports:
     - port: 4222
-      nodePort: 32222
-  type: NodePort
+      name: nats
+      targetPort: 4222
 
 ---
 #########################################################
