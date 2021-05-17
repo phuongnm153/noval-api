@@ -12,7 +12,7 @@ data:
   TRANSPORTER: nats://nats:4222
   CACHER: Memory
 
-  MONGO_URI: mongodb://mongo/noval-api
+  MONGO_URI: mongodb://localhost/moleculer-blog
 
 ---
 #########################################################
@@ -37,7 +37,7 @@ spec:
     spec:
       containers:
         - name: api
-          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api-gateway:$(echo $GITHUB_SHA | head -c7)
+          image: <IMAGE>
           imagePullPolicy: Always
           ports:
             - name: api
@@ -77,34 +77,6 @@ spec:
 
 ---
 #########################################################
-# API Gateway service
-#########################################################
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: api
-spec:
-  selector:
-    matchLabels:
-      app: api
-  replicas: 2
-  template:
-    metadata:
-      labels:
-        app: api
-    spec:
-      containers:
-        - name: api
-          image: noval-api
-          envFrom:
-            - configMapRef:
-                name: common-env
-          env:
-            - name: SERVICES
-              value: api
-
----
-#########################################################
 # Users service
 #########################################################
 apiVersion: apps/v1
@@ -123,13 +95,25 @@ spec:
     spec:
       containers:
         - name: users
-          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api-users:$(echo $GITHUB_SHA | head -c7)
+          image: <IMAGE>
           envFrom:
             - configMapRef:
                 name: common-env
           env:
             - name: SERVICES
               value: users
+            - name: LOGGER
+              value: "true"
+            - name: LOGLEVEL
+              value: info
+            - name: PORT
+              value: "3000"
+            - name: SERVICES
+              value: src/services/customers.service.js
+            - name: TRANSPORTER
+              value: nats://nats:4222
+            - name: REDIS_URI
+              value: redis://redis:6379
 
 ---
 #########################################################
