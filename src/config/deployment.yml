@@ -107,36 +107,6 @@ spec:
                   number: 3000
 ---
 #########################################################
-# NATS transporter service
-#########################################################
-apiVersion: v1
-kind: Service
-metadata:
-  name: nats
-spec:
-  selector:
-    app: nats
-  ports:
-    - port: 4222
-      nodePort: 32222
-  type: NodePort
-
----
-#########################################################
-# NATS transporter
-#########################################################
-apiVersion: v1
-kind: Pod
-metadata:
-  name: nats
-  labels:
-    app: nats
-spec:
-  containers:
-    - name: nats
-      image: nats
----
-#########################################################
 # Customers service
 #########################################################
 apiVersion: apps/v1
@@ -156,6 +126,7 @@ spec:
       containers:
         - name: customers
           image: <IMAGE>
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: common-env
@@ -184,6 +155,7 @@ spec:
       containers:
         - name: bookings
           image: <IMAGE>
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: common-env
@@ -212,6 +184,7 @@ spec:
       containers:
         - name: payments
           image: <IMAGE>
+          imagePullPolicy: Always
           envFrom:
             - configMapRef:
                 name: common-env
@@ -219,4 +192,34 @@ spec:
             - name: SERVICES
               value: payments
 
+---
+#########################################################
+# NATS transporter service
+#########################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: nats
+spec:
+  selector:
+    app: nats
+  ports:
+    - port: 4222
+      nodePort: 32222
+  type: NodePort
+
+---
+#########################################################
+# NATS transporter
+#########################################################
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nats
+  labels:
+    app: nats
+spec:
+  containers:
+    - name: nats
+      image: nats
 ---
