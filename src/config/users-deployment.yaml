@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: users
-          image: registry.digitalocean.com/docker-registry-phuongnm/noval-user-api:$(echo $GITHUB_SHA | head -c7)
+          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api-users:$(echo $GITHUB_SHA | head -c7)
           imagePullPolicy: IfNotPresent
           env:
             - name: LOGGER
