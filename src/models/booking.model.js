@@ -11,6 +11,12 @@ let connection = mongoose.createConnection('mongodb://localhost/moleculer-blog')
 autoIncrement.initialize(connection);
 
 let BookingSchema = new Schema({
+	bookingCode: {
+		type: String,
+		minlength: 6,
+		maxlength: 6,
+		required: 'Please fill booking code',
+	},
 	hotelId: {
 		type: Number,
 		index: true,
@@ -39,11 +45,9 @@ let BookingSchema = new Schema({
 	},
 	paymentId: {
 		type: Number,
-		index: true
 	},
 	customerId: {
 		type: Number,
-		index: true
 	},
 	customerName: {
 		type: String,
@@ -81,7 +85,27 @@ let BookingSchema = new Schema({
 		default: BOOKING_NEW,
 		min: 0,
 		max: 3
-	}
+	},
+	invoiceCompanyName: {
+		type: String,
+		trim: true
+	},
+	invoiceCompanyTax: {
+		type: String,
+		trim: true
+	},
+	invoiceCompanyAddress: {
+		type: String,
+		trim: true
+	},
+	invoiceReceiveAddress: {
+		type: String,
+		trim: true
+	},
+	invoiceNote: {
+		type: String,
+		trim: true
+	},
 }, {
 	timestamps: true
 });

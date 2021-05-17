@@ -18,16 +18,44 @@ data:
 #########################################################
 # Service for Moleculer API Gateway service
 #########################################################
-apiVersion: v1
-kind: Service
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: api
+  labels:
+    name: api
 spec:
   selector:
-    app: api
-  ports:
-    - port: 3000
-      targetPort: 3000
+    matchLabels:
+      name: api
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: api
+        name: api
+    spec:
+      containers:
+        - name: api
+          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api-gateway:$(echo $GITHUB_SHA | head -c7)
+          imagePullPolicy: Always
+          ports:
+            - name: api
+              containerPort: 3000
+          env:
+            - name: LOGGER
+              value: "true"
+            - name: LOGLEVEL
+              value: info
+            - name: PORT
+              value: "3000"
+            - name: SERVICES
+              value: src/services/api.service.js
+            - name: TRANSPORTER
+              value: nats://nats:4222
+            - name: REDIS_URI
+              value: redis://redis:6379
+      restartPolicy: Always
 
 ---
 #########################################################
@@ -77,129 +105,31 @@ spec:
 
 ---
 #########################################################
-# Greeter service
+# Users service
 #########################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: greeter
+  name: users
 spec:
   selector:
     matchLabels:
-      app: greeter
+      app: users
   replicas: 2
   template:
     metadata:
       labels:
-        app: greeter
+        app: users
     spec:
       containers:
-        - name: greeter
-          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api:$(echo $GITHUB_SHA | head -c7)
+        - name: users
+          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api-users:$(echo $GITHUB_SHA | head -c7)
           envFrom:
             - configMapRef:
                 name: common-env
           env:
             - name: SERVICES
-              value: greeter
-
----
-#########################################################
-# Products service
-#########################################################
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: products
-spec:
-  selector:
-    matchLabels:
-      app: products
-  replicas: 2
-  template:
-    metadata:
-      labels:
-        app: products
-    spec:
-      containers:
-        - name: products
-          image: registry.digitalocean.com/docker-registry-phuongnm/noval-api:$(echo $GITHUB_SHA | head -c7)
-          envFrom:
-            - configMapRef:
-                name: common-env
-          env:
-            - name: SERVICES
-              value: products
-
----
-#########################################################
-# MongoDB server
-#########################################################
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: mongo
-  labels:
-    app: mongo
-spec:
-  selector:
-    matchLabels:
-      app: mongo
-  replicas: 1
-  serviceName: mongo
-  template:
-    metadata:
-      labels:
-        app: mongo
-    spec:
-      containers:
-        - image: mongo
-          name: mongo
-          ports:
-            - containerPort: 27017
-          resources: {}
-          volumeMounts:
-            - mountPath: /data/db
-              name: mongo-data
-      volumes:
-        - name: mongo-data
-          persistentVolumeClaim:
-            claimName: mongo-data
-
----
-#########################################################
-# Persistent volume for MongoDB
-#########################################################
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: mongo-data
-  labels:
-    name: mongo-data
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Mi
-
----
-#########################################################
-# MongoDB service
-#########################################################
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongo
-  labels:
-    app: mongo
-spec:
-  ports:
-    - port: 27017
-      targetPort: 27017
-  selector:
-    app: mongo
-
+              value: users
 
 ---
 #########################################################
