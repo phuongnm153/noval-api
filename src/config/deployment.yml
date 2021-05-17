@@ -124,46 +124,7 @@ spec:
 #              servicePort: 3000
 #
 #---
-#########################################################
-# Users service
-#########################################################
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: users
-spec:
-  selector:
-    matchLabels:
-      app: users
-  replicas: 2
-  template:
-    metadata:
-      labels:
-        app: users
-    spec:
-      containers:
-        - name: users
-          image: <IMAGE>
-          envFrom:
-            - configMapRef:
-                name: common-env
-          env:
-            - name: SERVICES
-              value: users
-            - name: LOGGER
-              value: "true"
-            - name: LOGLEVEL
-              value: info
-            - name: PORT
-              value: "3000"
-            - name: SERVICES
-              value: src/services/customers.service.js
-            - name: TRANSPORTER
-              value: nats://nats:4222
-            - name: REDIS_URI
-              value: redis://redis:6379
 
----
 #########################################################
 # NATS transporter service
 #########################################################
@@ -205,3 +166,124 @@ spec:
           ports:
             - containerPort: 4222
               name: nats
+---
+#########################################################
+# Customers service
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customers
+spec:
+  selector:
+    matchLabels:
+      app: customers
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: customers
+    spec:
+      containers:
+        - name: customers
+          image: <IMAGE>
+          envFrom:
+            - configMapRef:
+                name: common-env
+          env:
+            - name: SERVICES
+              value: customers
+            - name: LOGGER
+              value: "true"
+            - name: LOGLEVEL
+              value: info
+            - name: PORT
+              value: "3000"
+            - name: SERVICES
+              value: src/services/customers.service.js
+            - name: TRANSPORTER
+              value: nats://nats:4222
+            - name: REDIS_URI
+              value: redis://redis:6379
+
+---
+#########################################################
+# Booking service
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookings
+spec:
+  selector:
+    matchLabels:
+      app: bookings
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: bookings
+    spec:
+      containers:
+        - name: bookings
+          image: <IMAGE>
+          envFrom:
+            - configMapRef:
+                name: common-env
+          env:
+            - name: SERVICES
+              value: bookings
+            - name: LOGGER
+              value: "true"
+            - name: LOGLEVEL
+              value: info
+            - name: PORT
+              value: "3000"
+            - name: SERVICES
+              value: src/services/bookings.service.js
+            - name: TRANSPORTER
+              value: nats://nats:4222
+            - name: REDIS_URI
+              value: redis://redis:6379
+
+---
+#########################################################
+# Payment service
+#########################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: payments
+spec:
+  selector:
+    matchLabels:
+      app: payments
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: payments
+    spec:
+      containers:
+        - name: payments
+          image: <IMAGE>
+          envFrom:
+            - configMapRef:
+                name: common-env
+          env:
+            - name: SERVICES
+              value: payments
+            - name: LOGGER
+              value: "true"
+            - name: LOGLEVEL
+              value: info
+            - name: PORT
+              value: "3000"
+            - name: SERVICES
+              value: src/services/payments.service.js
+            - name: TRANSPORTER
+              value: nats://nats:4222
+            - name: REDIS_URI
+              value: redis://redis:6379
+
+---
