@@ -162,18 +162,6 @@ spec:
           env:
             - name: SERVICES
               value: customers
-            - name: LOGGER
-              value: "true"
-            - name: LOGLEVEL
-              value: info
-            - name: PORT
-              value: "3000"
-            - name: SERVICES
-              value: src/services/customers.service.js
-            - name: TRANSPORTER
-              value: nats://nats:4222
-            - name: REDIS_URI
-              value: redis://redis:6379
 
 ---
 #########################################################
@@ -202,18 +190,6 @@ spec:
           env:
             - name: SERVICES
               value: bookings
-            - name: LOGGER
-              value: "true"
-            - name: LOGLEVEL
-              value: info
-            - name: PORT
-              value: "3000"
-            - name: SERVICES
-              value: src/services/bookings.service.js
-            - name: TRANSPORTER
-              value: nats://nats:4222
-            - name: REDIS_URI
-              value: redis://redis:6379
 
 ---
 #########################################################
@@ -242,17 +218,5 @@ spec:
           env:
             - name: SERVICES
               value: payments
-            - name: LOGGER
-              value: "true"
-            - name: LOGLEVEL
-              value: info
-            - name: PORT
-              value: "3000"
-            - name: SERVICES
-              value: src/services/payments.service.js
-            - name: TRANSPORTER
-              value: nats://nats:4222
-            - name: REDIS_URI
-              value: redis://redis:6379
 
 ---
