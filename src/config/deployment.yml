@@ -42,19 +42,12 @@ spec:
           ports:
             - name: api
               containerPort: 3000
+          envFrom:
+            - configMapRef:
+                name: common-env
           env:
-            - name: LOGGER
-              value: "true"
-            - name: LOGLEVEL
-              value: info
-            - name: PORT
-              value: "3000"
             - name: SERVICES
-              value: src/services/api.service.js
-            - name: TRANSPORTER
-              value: nats://nats:4222
-            - name: REDIS_URI
-              value: redis://redis:6379
+              value: api
           livenessProbe:
             httpGet:
               path: /live
@@ -132,7 +125,7 @@ spec:
                 name: common-env
           env:
             - name: SERVICES
-              value: src/services/customers.service.js
+              value: customers
 
 ---
 #########################################################
@@ -161,7 +154,7 @@ spec:
                 name: common-env
           env:
             - name: SERVICES
-              value: src/services/bookings.service.js
+              value: bookings
 
 ---
 #########################################################
@@ -190,7 +183,7 @@ spec:
                 name: common-env
           env:
             - name: SERVICES
-              value: src/services/bookings.service.js
+              value: payments
 
 ---
 #########################################################

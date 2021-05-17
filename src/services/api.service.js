@@ -48,7 +48,7 @@ module.exports = {
 				autoAliases: true,
 
 				aliases: {
-
+					'REST /customers': 'customers',
 				},
 
 				/**
