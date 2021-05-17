@@ -100,8 +100,10 @@ spec:
         paths:
           - path: /
             backend:
-              serviceName: api-service
-              servicePort: 3000
+              service:
+                name: api-service
+                port:
+                  number: 3000
 ---
 #########################################################
 # Ingress for Moleculer API Gateway
