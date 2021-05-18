@@ -49,6 +49,7 @@ module.exports = {
 
 				aliases: {
 					'REST /customers': 'customers',
+					'REST /bookings': 'bookings',
 				},
 
 				/**
