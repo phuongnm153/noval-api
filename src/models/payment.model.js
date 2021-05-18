@@ -5,7 +5,7 @@ const {BOOKING_NEW, PAYMENT_POINT} = require('../enums/constant.enum');
 let Schema = mongoose.Schema,
 	autoIncrement = require('mongoose-auto-increment');
 
-let connection = mongoose.createConnection(process.env.MONGO_URI);
+let connection = mongoose.createConnection(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 autoIncrement.initialize(connection);
 
