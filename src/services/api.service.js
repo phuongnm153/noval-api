@@ -48,9 +48,9 @@ module.exports = {
 				autoAliases: true,
 
 				aliases: {
-					'REST /customers': 'customers',
-					'REST /bookings': 'bookings',
-					'REST /payments': 'payments',
+					'REST customers': 'customers',
+					'REST bookings': 'bookings',
+					'REST payments': 'payments',
 				},
 
 				/**
