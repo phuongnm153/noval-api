@@ -41,6 +41,7 @@ module.exports = {
 			// },
 			/** @param {Context} ctx  */
 			async handler(ctx) {
+				console.log('aaaaa', process.env.MONGO_URI);
 				let random_boolean = Math.random() < 0.5;
 				let data = {
 					...ctx.params,
