@@ -39,6 +39,7 @@ jobs:
         uses: SpicyPizza/create-envfile@v1.1
         with:
           envkey_MONGO_URI: ${{ secrets.MONGO_URI }}
+          directory: $GITHUB_WORKSPACE
       - name: Update image deployment file        
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/docker-registry-phuongnm/noval-api:'${TAG}'|' $GITHUB_WORKSPACE/src/config/deployment.yml
       - name: Save DigitalOcean kubeconfig with short-lived credentials
