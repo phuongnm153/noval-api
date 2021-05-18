@@ -119,6 +119,8 @@ spec:
           env:
             - name: SERVICES
               value: customers
+              
+      restartPolicy: Always
 
 ---
 #########################################################
@@ -148,6 +150,8 @@ spec:
           env:
             - name: SERVICES
               value: bookings
+              
+      restartPolicy: Always
 
 ---
 #########################################################
@@ -177,6 +181,8 @@ spec:
           env:
             - name: SERVICES
               value: payments
+
+      restartPolicy: Always
 
 ---
 #########################################################
