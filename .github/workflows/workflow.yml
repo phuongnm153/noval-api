@@ -38,9 +38,11 @@ jobs:
       - name: Update mongo db uri deployment file
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: DBURI=$(echo $MONGO_URI) && sed -i 's|<ENV_MONGO_URI>|${DBURI}|' $GITHUB_WORKSPACE/src/config/deployment.yml
+        run: DBURI=$(echo $MONGO_URI) && sed -i 's|<ENV_MONGO_URI>|'${DBURI}'|' $GITHUB_WORKSPACE/src/config/deployment.yml
       - name: Update image deployment file        
         run: TAG=$(echo $GITHUB_SHA | head -c7) && sed -i 's|<IMAGE>|registry.digitalocean.com/docker-registry-phuongnm/noval-api:'${TAG}'|' $GITHUB_WORKSPACE/src/config/deployment.yml
+      - name: Get path of deployment file
+        run: echo $MONGO_URI
       - name: Save DigitalOcean kubeconfig with short-lived credentials
         run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 k8s-1-20-2-do-0-sgp1-1621239923767
       - name: Deploy to DigitalOcean Kubernetes
