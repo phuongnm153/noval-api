@@ -16,8 +16,8 @@ module.exports = {
 			'totalMoney', 'totalPoint', 'status', 'bookInfo', 'promotionInfo', 'voucherCode',
 			'paymentId', 'paymentAt', 'successAt', 'failAt', 'failType',
 			'customerId', 'customerName', 'customerEmail', 'customerPhone', 'customerAddress',
-			'invoiceCompanyName', 'invoiceCompanyTax', 'invoiceCompanyAddress', 'invoiceReceiveAddress', 'invoiceNote',
-			'deletedAt'
+			'invoiceCompanyName', 'invoiceCompanyTax', 'invoiceCompanyAddress', 'invoiceReceiveAddress',
+			'invoiceNote', 'deletedAt'
 		]
 	},
 

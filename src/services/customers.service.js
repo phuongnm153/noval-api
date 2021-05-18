@@ -3,7 +3,6 @@
 const DbService = require('moleculer-db');
 const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const Customer = require('../models/customer.model');
-// const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 
 /*
 const bcrypt = require("bcrypt");

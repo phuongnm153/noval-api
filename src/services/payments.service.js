@@ -5,7 +5,6 @@ const DbService = require('moleculer-db');
 const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const Payment = require('../models/payment.model');
 const {PAYMENT_POINT, PAYMENT_GATEWAY, PAYMENT_SUCCESS, PAYMENT_FAIL} = require('../enums/constant.enum');
-// const CacheCleaner = require("../mixins/cache.cleaner.mixin");
 
 module.exports = {
 	name: 'payments',
