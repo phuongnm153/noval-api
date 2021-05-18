@@ -8,11 +8,11 @@ metadata:
 data:
   NAMESPACE: "NOVALAPI"
   LOGLEVEL: info
-  SERVICEDIR: src/services
-  TRANSPORTER: nats://nats:4222
+  SERVICEDIR: "src/services"
+  TRANSPORTER: "nats://nats:4222"
   CACHER: Memory
 
-  MONGO_URI: <MONGO_URI>
+  MONGO_URI: "<MONGO_URI>"
 
 ---
 #########################################################
