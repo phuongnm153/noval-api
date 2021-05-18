@@ -12,8 +12,6 @@ data:
   TRANSPORTER: "nats://nats:4222"
   CACHER: Memory
 
-  MONGO_URI: "<ENV_MONGO_URI>"
-
 ---
 #########################################################
 # Service for Moleculer API Gateway service
