@@ -12,7 +12,7 @@ data:
   TRANSPORTER: "nats://nats:4222"
   CACHER: Memory
 
-  MONGO_URI: "<MONGO_URI>"
+  MONGO_URI: "mongodb://phuongnm153:hyVnrZOnPzAaVnnc@datalake0-nbhcl.a.query.mongodb.net/noval-db?ssl=true&authSource=admin"
 
 ---
 #########################################################
