@@ -1,8 +1,7 @@
 'use strict';
 
-let mongoose = require("mongoose");
+let mongoose = require('mongoose');
 const autoIncrement = require('mongoose-auto-increment');
-
 const { BOOKING_NEW, PAYMENT_POINT } = require('../enums/constant.enum');
 let Schema = mongoose.Schema;
 
