@@ -74,5 +74,4 @@ PaymentSchema.index({
 
 PaymentSchema.plugin(autoIncrement.plugin, { model: 'Payments', startAt: 1 });
 
-//Add some comment
 module.exports = mongoose.model('Payments', PaymentSchema);
