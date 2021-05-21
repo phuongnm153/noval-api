@@ -1,6 +1,6 @@
 'use strict';
 
-let mongoose = require('mongoose');
+let mongoose = require("mongoose");
 const autoIncrement = require('mongoose-auto-increment');
 
 const { BOOKING_NEW, PAYMENT_POINT } = require('../enums/constant.enum');
@@ -72,6 +72,7 @@ PaymentSchema.index({
 	fullName: 'text',
 	username: 'text',
 });
+
 PaymentSchema.plugin(autoIncrement.plugin, { model: 'Payments', startAt: 1 });
 
 module.exports = mongoose.model('Payments', PaymentSchema);
