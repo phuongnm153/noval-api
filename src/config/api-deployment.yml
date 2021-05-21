@@ -38,7 +38,6 @@ spec:
       restartPolicy: Always
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -61,7 +60,6 @@ spec:
     app: api
 
 ---
-
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:

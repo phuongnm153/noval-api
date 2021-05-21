@@ -7,6 +7,7 @@ WORKDIR /app
 
 COPY package.json package-lock.json ./
 
+RUN npm i -g husky
 RUN npm install --production
 
 COPY . .

@@ -25,21 +25,27 @@ function hashPassword(password) {
 module.exports = {
 	name: 'customers',
 	mixins: [DbService],
-	adapter: new MongooseAdapter(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
+	adapter: new MongooseAdapter(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	}),
 	model: Customer,
 
 	settings: {
-		fields: ['_id', 'username', 'fullName', 'password', 'email', 'phone', 'address']
+		fields: [
+			'_id',
+			'username',
+			'fullName',
+			'password',
+			'email',
+			'phone',
+			'address',
+		],
 	},
 
-	actions: {
+	actions: {},
 
-	},
+	methods: {},
 
-	methods: {
-	},
-
-	async afterConnected() {
-	}
-
+	async afterConnected() {},
 };
