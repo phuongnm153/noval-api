@@ -13,7 +13,7 @@
     "cli": "moleculer connect NATS",
     "ci": "jest --watch",
     "test": "jest --coverage",
-    "lint": "eslint src/",
+    "lint": "eslint src/ --fix",
     "dc:up": "docker-compose up --build -d",
     "dc:logs": "docker-compose logs -f",
     "dc:down": "docker-compose down",
