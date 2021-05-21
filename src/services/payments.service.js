@@ -4,18 +4,35 @@ const { MoleculerError } = require('moleculer').Errors;
 const DbService = require('moleculer-db');
 const MongooseAdapter = require('moleculer-db-adapter-mongoose');
 const Payment = require('../models/payment.model');
-const {PAYMENT_POINT, PAYMENT_GATEWAY, PAYMENT_SUCCESS, PAYMENT_FAIL} = require('../enums/constant.enum');
+const {
+	PAYMENT_POINT,
+	PAYMENT_GATEWAY,
+	PAYMENT_SUCCESS,
+	PAYMENT_FAIL,
+} = require('../enums/constant.enum');
 
 module.exports = {
 	name: 'payments',
 	mixins: [DbService],
-	adapter: new MongooseAdapter(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true }),
+	adapter: new MongooseAdapter(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useUnifiedTopology: true,
+	}),
 	model: Payment,
 
 	settings: {
 		fields: [
-			'_id', 'bookingId', 'paymentMethod', 'totalMoney', 'point', 'status',
-			'transactionId', 'paymentAt', 'requestData', 'responseData', 'paymentUrl'
+			'_id',
+			'bookingId',
+			'paymentMethod',
+			'totalMoney',
+			'point',
+			'status',
+			'transactionId',
+			'paymentAt',
+			'requestData',
+			'responseData',
+			'paymentUrl',
 		],
 		// Populating
 		populates: {
@@ -23,10 +40,10 @@ module.exports = {
 			bookingInfo: {
 				action: 'bookings.get',
 				params: {
-					fields: ['bookingCode', 'totalMoney']
-				}
-			}
-		}
+					fields: ['bookingCode', 'totalMoney'],
+				},
+			},
+		},
 	},
 
 	actions: {
@@ -51,10 +68,16 @@ module.exports = {
 				};
 				const json = await this.adapter.insert(data);
 				if (!random_boolean)
-					return this.Promise.reject(new MoleculerError('Invalid point amount', 404, 'INVALID_POINT'));
+					return this.Promise.reject(
+						new MoleculerError(
+							'Invalid point amount',
+							404,
+							'INVALID_POINT',
+						),
+					);
 
 				return json;
-			}
+			},
 		},
 
 		/**
@@ -77,17 +100,16 @@ module.exports = {
 				};
 				const json = await this.adapter.insert(data);
 				if (!random_boolean)
-					return this.Promise.reject(new MoleculerError('Payment fail', 404, 'PAYMENT_FAIL'));
+					return this.Promise.reject(
+						new MoleculerError('Payment fail', 404, 'PAYMENT_FAIL'),
+					);
 
 				return json;
 			},
-		}
+		},
 	},
 
-	methods: {
-	},
+	methods: {},
 
-	async afterConnected() {
-	}
-
+	async afterConnected() {},
 };
